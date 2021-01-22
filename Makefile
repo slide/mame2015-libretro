@@ -151,13 +151,23 @@ ifneq (,$(findstring unix,$(platform)))
    ifeq ($(firstword $(filter ppc64,$(UNAME))),ppc64)
       PTR64 = 1
    endif
+   ifeq ($(firstword $(filter aarch64,$(UNAME))),aarch64)
+      PTR64 = 1
+   endif
+   ifeq ($(firstword $(filter arm64,$(UNAME))),arm64)
+      PTR64 = 1
+   endif
    ifneq (,$(findstring ppc,$(UNAME)))
       BIGENDIAN=1
    endif
-   ifneq (,$(findstring armv,$(UNAME) $(platform)))
+   ifneq (,$(findstring armv7,$(UNAME) $(platform)))
       CCOMFLAGS += -mstructure-size-boundary=32
       PLATCFLAGS += -DSDLMAME_NO64BITIO -DSDLMAME_ARM -DRETRO_SETJMP_HACK -DARM
       LDFLAGS += -Wl,--fix-cortex-a8 -Wl,--no-as-needed
+      NOASM = 1
+      FORCE_DRC_C_BACKEND = 1
+   endif
+   ifneq (,$(findstring armv8,$(UNAME) $(platform)))
       NOASM = 1
       FORCE_DRC_C_BACKEND = 1
    endif
