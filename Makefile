@@ -92,6 +92,8 @@ LDFLAGSEMULATOR =
 
 CCOMFLAGS  += -D__LIBRETRO__
 
+$(info UNAME=$(UNAME))
+
 GIT_VERSION ?= " $(shell git rev-parse --short HEAD || echo unknown)"
 ifneq ($(GIT_VERSION)," unknown")
 	CCOMFLAGS += -DGIT_VERSION=\"$(GIT_VERSION)\"
